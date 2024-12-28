@@ -1,0 +1,8 @@
+[package]
+name = "aoc_2024"
+description = "Solutions to Advent of Code 2024"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+aoc-core.workspace = true

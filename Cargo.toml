@@ -1,0 +1,18 @@
+[workspace]
+resolver = "2"
+members = [
+    "2023",
+    "2024",
+    "bin",
+    "core",
+]
+
+[workspace.package]
+version = "1.0.0"
+edition = "2021"
+
+[workspace.dependencies]
+aoc_2023 = { path = "./2023/" }
+aoc_2024 = { path = "./2024/" }
+aoc-core = { path = "./core/" }
+clap = { version = "4.5", features = ["derive"] }

@@ -1,0 +1,11 @@
+[package]
+name = "aoc-bin"
+description = "Runner for solutions to Advent of Code"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+aoc_2023.workspace = true
+aoc_2024.workspace = true
+aoc-core.workspace = true
+clap.workspace = true

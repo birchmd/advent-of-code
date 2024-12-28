@@ -1,0 +1,7 @@
+[package]
+name = "aoc-core"
+description = "Crate containing utility functions common to all years of Advent of Code"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
