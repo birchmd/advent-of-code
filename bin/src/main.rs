@@ -20,6 +20,7 @@ fn get_solution(year: usize, day: usize) {
         panic!("Failed to load {filename}: {e:?}");
     });
     match (year, day) {
+        (2023, 1) => aoc_2023::day1::Day1::run(&data),
         (2024, 1) => aoc_2024::day1::Day1::run(&data),
         other => panic!("Unknown {other:?}"),
     }
