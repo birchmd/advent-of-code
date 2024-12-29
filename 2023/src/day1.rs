@@ -1,4 +1,4 @@
-use aoc_core::Solution;
+use aoc_core::{digit_value, Solution};
 
 pub struct Day1;
 
@@ -12,16 +12,13 @@ impl Solution for Day1 {
     }
 
     fn part_1(input: Self::Input) -> Self::Output1 {
-        const ZERO: u8 = b'0';
-        const NINE: u8 = b'9';
-
         input
             .lines()
             .map(|line| {
-                let mut digits = line.bytes().filter(|c| (ZERO..=NINE).contains(c));
+                let mut digits = line.bytes().filter_map(digit_value);
                 let first = digits.next().expect("Must have at least one digit");
                 let last = digits.last().unwrap_or(first);
-                (first - ZERO, last - ZERO)
+                (first, last)
             })
             .map(|(a, b)| (a * 10 + b) as u64)
             .sum()
