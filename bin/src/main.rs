@@ -21,6 +21,7 @@ fn get_solution(year: usize, day: usize) {
     });
     match (year, day) {
         (2023, 1) => aoc_2023::day1::Day1::run(&data),
+        (2023, 2) => aoc_2023::day2::Day2::run(&data),
         (2024, 1) => aoc_2024::day1::Day1::run(&data),
         other => panic!("Unknown {other:?}"),
     }
