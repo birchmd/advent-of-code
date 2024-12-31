@@ -31,6 +31,11 @@ pub fn fold_lines<T, F: Fn(&mut T, &str)>(data: &str, init: T, acc: F) -> T {
     result
 }
 
+// Splits data at each empty line
+pub fn blocks(data: &str) -> impl Iterator<Item = &str> {
+    data.split("\n\n")
+}
+
 pub fn digit_value(digit: u8) -> Option<u8> {
     const ZERO: u8 = b'0';
     const NINE: u8 = b'9';
