@@ -83,8 +83,8 @@ impl Solution for Day1 {
 mod tests {
     use super::*;
 
-    const EXAMPLE_INPUT_1: &str = include_str!("day1_example_part1.txt");
-    const EXAMPLE_INPUT_2: &str = include_str!("day1_example_part2.txt");
+    const EXAMPLE_INPUT_1: &str = include_str!("res/day1_example_part1.txt");
+    const EXAMPLE_INPUT_2: &str = include_str!("res/day1_example_part2.txt");
 
     #[test]
     fn test_part1() {

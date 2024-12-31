@@ -115,7 +115,7 @@ impl Solution for Day3 {
 mod tests {
     use super::*;
 
-    const EXAMPLE_INPUT: &str = include_str!("day3_example.txt");
+    const EXAMPLE_INPUT: &str = include_str!("res/day3_example.txt");
 
     #[test]
     fn test_part1() {
