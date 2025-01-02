@@ -36,6 +36,10 @@ pub fn blocks(data: &str) -> impl Iterator<Item = &str> {
     data.split("\n\n")
 }
 
+pub fn strip_label(data: &str) -> &str {
+    data.split_once(':').expect("Has colon").1.trim()
+}
+
 pub fn digit_value(digit: u8) -> Option<u8> {
     const ZERO: u8 = b'0';
     const NINE: u8 = b'9';
@@ -57,6 +61,20 @@ where
             (acc + power * (d as u64), power * 10)
         })
         .0
+}
+
+pub fn isqrt(x: u64) -> u64 {
+    let mut lower = 0;
+    let mut upper = x + 1;
+    while lower != upper - 1 {
+        let middle = (lower + upper) / 2;
+        if middle * middle <= x {
+            lower = middle;
+        } else {
+            upper = middle;
+        }
+    }
+    lower
 }
 
 pub fn basic_grid(data: &str) -> Grid<u8> {
