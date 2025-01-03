@@ -1,4 +1,7 @@
-use {self::grid::Grid, std::fmt::Debug};
+use {
+    self::grid::Grid,
+    std::{collections::HashMap, fmt::Debug, hash::Hash},
+};
 
 pub mod grid;
 pub mod linked_list;
@@ -75,6 +78,20 @@ pub fn isqrt(x: u64) -> u64 {
         }
     }
     lower
+}
+
+pub fn count_distinct<'a, T, I>(iter: I) -> HashMap<&'a T, usize>
+where
+    T: Eq + Hash,
+    I: IntoIterator<Item = &'a T>,
+{
+    let mut result = HashMap::new();
+    for t in iter {
+        let entry = result.entry(t);
+        let count = entry.or_default();
+        *count += 1;
+    }
+    result
 }
 
 pub fn basic_grid(data: &str) -> Grid<u8> {
