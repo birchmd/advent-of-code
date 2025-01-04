@@ -2,7 +2,7 @@ use aoc_core::{digit_value, Solution};
 
 pub struct Day1;
 
-impl Solution for Day1 {
+impl Solution<'_> for Day1 {
     type Input = String;
     type Output1 = u64;
     type Output2 = u64;

@@ -53,7 +53,7 @@ impl Game {
     }
 }
 
-impl Solution for Day2 {
+impl Solution<'_> for Day2 {
     type Input = Vec<Game>;
     type Output1 = u64;
     type Output2 = u64;

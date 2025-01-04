@@ -2,7 +2,7 @@ use aoc_core::{isqrt, strip_label, Solution};
 
 pub struct Day6;
 
-impl Solution for Day6 {
+impl Solution<'_> for Day6 {
     type Input = Vec<Race>;
     type Output1 = u64;
     type Output2 = u64;

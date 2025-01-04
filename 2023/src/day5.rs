@@ -2,7 +2,7 @@ use aoc_core::{blocks, Solution};
 
 pub struct Day5;
 
-impl Solution for Day5 {
+impl Solution<'_> for Day5 {
     type Input = (Vec<u64>, SeedToLocation);
     type Output1 = u64;
     type Output2 = u64;

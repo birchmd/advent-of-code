@@ -6,16 +6,16 @@ use {
 pub mod grid;
 pub mod linked_list;
 
-pub trait Solution {
-    type Input: Clone;
+pub trait Solution<'a> {
+    type Input: Clone + 'a;
     type Output1: Debug;
     type Output2: Debug;
 
-    fn parse_input(data: &str) -> Self::Input;
+    fn parse_input(data: &'a str) -> Self::Input;
     fn part_1(input: Self::Input) -> Self::Output1;
     fn part_2(input: Self::Input) -> Self::Output2;
 
-    fn run(data: &str) {
+    fn run(data: &'a str) {
         let input = Self::parse_input(data);
 
         let part1 = Self::part_1(input.clone());
@@ -80,6 +80,21 @@ pub fn isqrt(x: u64) -> u64 {
     lower
 }
 
+pub fn gcd(x: u64, y: u64) -> u64 {
+    let (mut a, mut b) = if x < y { (y, x) } else { (x, y) };
+    let mut c = a % b;
+    while c != 0 {
+        a = b;
+        b = c;
+        c = a % b;
+    }
+    b
+}
+
+pub fn lcm(x: u64, y: u64) -> u64 {
+    x * y / gcd(x, y)
+}
+
 pub fn count_distinct<'a, T, I>(iter: I) -> HashMap<&'a T, usize>
 where
     T: Eq + Hash,
@@ -108,4 +123,9 @@ where
         .map(|row| row.bytes().map(&element_constructor).collect())
         .collect();
     Grid { rows }
+}
+
+#[test]
+fn test_gcd() {
+    assert_eq!(gcd(462, 1071), 21);
 }

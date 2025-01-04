@@ -2,7 +2,7 @@ use {aoc_core::Solution, std::collections::HashSet};
 
 pub struct Day4;
 
-impl Solution for Day4 {
+impl Solution<'_> for Day4 {
     type Input = Vec<(HashSet<u8>, Vec<u8>)>;
 
     type Output1 = u64;

@@ -2,7 +2,7 @@ use aoc_core::{count_distinct, Solution};
 
 pub struct Day7;
 
-impl Solution for Day7 {
+impl Solution<'_> for Day7 {
     type Input = Vec<(Hand, u64)>;
     type Output1 = u64;
     type Output2 = u64;

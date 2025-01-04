@@ -69,7 +69,7 @@ fn find_part_numbers(input: &Grid<Element>) -> Vec<PartNumber> {
     result
 }
 
-impl Solution for Day3 {
+impl Solution<'_> for Day3 {
     type Input = Grid<Element>;
     type Output1 = u64;
     type Output2 = u64;
