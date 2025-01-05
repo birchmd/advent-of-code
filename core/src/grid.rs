@@ -115,6 +115,12 @@ impl<T: Clone> Grid<T> {
     }
 }
 
+impl<T: Clone + Eq> Grid<T> {
+    pub fn index_of(&self, el: &T) -> Option<Position> {
+        self.index_range().find(|x| &self[*x] == el)
+    }
+}
+
 impl<T> Index<Position> for Grid<T> {
     type Output = T;
 
