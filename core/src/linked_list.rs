@@ -18,6 +18,20 @@ impl<T> LinkedList<T> {
         }
     }
 
+    pub fn head(&self) -> Option<&T> {
+        match self {
+            Self::Cons { head, .. } => Some(head),
+            Self::Nil => None,
+        }
+    }
+
+    pub fn pop(self) -> Option<(T, LinkedList<T>)> {
+        match self {
+            Self::Cons { head, tail } => Some((head, *tail)),
+            Self::Nil => None,
+        }
+    }
+
     pub fn collect_reverse<I>(items: I) -> Self
     where
         I: IntoIterator<Item = T>,
