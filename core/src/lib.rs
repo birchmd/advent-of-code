@@ -1,6 +1,6 @@
 use {
     self::grid::Grid,
-    std::{collections::HashMap, fmt::Debug, hash::Hash},
+    std::{collections::HashMap, fmt::Debug, hash::Hash, ops::Sub},
 };
 
 pub mod grid;
@@ -78,6 +78,29 @@ pub fn isqrt(x: u64) -> u64 {
         }
     }
     lower
+}
+
+// Returns a pair where the smaller element is first
+pub fn min_max<T>(a: T, b: T) -> (T, T)
+where
+    T: Ord,
+{
+    if a < b {
+        (a, b)
+    } else {
+        (b, a)
+    }
+}
+
+pub fn abs_diff<T>(a: T, b: T) -> T
+where
+    T: Ord + Sub<T, Output = T>,
+{
+    if a > b {
+        a - b
+    } else {
+        b - a
+    }
 }
 
 pub fn gcd(x: u64, y: u64) -> u64 {
