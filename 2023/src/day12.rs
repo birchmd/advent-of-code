@@ -1,6 +1,7 @@
-use std::{cmp::Ordering, collections::HashMap};
-
-use aoc_core::Solution;
+use {
+    aoc_core::Solution,
+    std::{cmp::Ordering, collections::HashMap},
+};
 
 pub struct Day12;
 
