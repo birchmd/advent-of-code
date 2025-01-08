@@ -1,4 +1,7 @@
-use std::ops::{Index, IndexMut};
+use std::{
+    fmt::Debug,
+    ops::{Index, IndexMut},
+};
 
 pub type Position = (usize, usize);
 
@@ -75,12 +78,12 @@ impl NeighborsCreator {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Grid<T> {
     pub rows: Vec<Vec<T>>,
 }
 
-impl<T: Clone> Grid<T> {
+impl<T> Grid<T> {
     pub fn n_rows(&self) -> usize {
         self.rows.len()
     }
@@ -101,7 +104,9 @@ impl<T: Clone> Grid<T> {
         let n_cols = self.n_cols();
         (0..n_rows).flat_map(move |i| (0..n_cols).map(move |j| (i, j)))
     }
+}
 
+impl<T: Clone> Grid<T> {
     pub fn transposed(&self) -> Self {
         let n_rows = self.n_rows();
         let n_cols = self.n_cols();
@@ -118,6 +123,21 @@ impl<T: Clone> Grid<T> {
 impl<T: Clone + Eq> Grid<T> {
     pub fn index_of(&self, el: &T) -> Option<Position> {
         self.index_range().find(|x| &self[*x] == el)
+    }
+}
+
+impl<T: Clone + Into<char>> Grid<T> {
+    pub fn render(&self) -> String {
+        let n = self.n_rows();
+        let m = self.n_cols();
+        let mut output = String::with_capacity(n * (m + 1));
+        for row in &self.rows {
+            for x in row {
+                output.push(x.clone().into());
+            }
+            output.push('\n');
+        }
+        output
     }
 }
 
