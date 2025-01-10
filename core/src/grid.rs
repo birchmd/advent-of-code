@@ -1,9 +1,59 @@
-use std::{
-    fmt::Debug,
-    ops::{Index, IndexMut},
+use {
+    crate::min_heap::MinHeap,
+    std::{
+        collections::hash_map::{Entry, HashMap},
+        fmt::Debug,
+        hash::Hash,
+        ops::{Index, IndexMut},
+    },
 };
 
 pub type Position = (usize, usize);
+
+pub fn dijkstra_shortest_path<Node, I, F, G>(
+    start: Node,
+    weights: F,
+    neighbors: G,
+) -> (HashMap<Node, u64>, HashMap<Node, Node>)
+where
+    Node: Clone + Hash + Ord,
+    I: IntoIterator<Item = Node>,
+    F: Fn(&Node, &Node) -> u64,
+    G: Fn(&Node) -> I,
+{
+    let mut heap: MinHeap<(u64, Node)> = MinHeap::new();
+    heap.push((0, start.clone()));
+
+    let mut distances: HashMap<Node, u64> = HashMap::new();
+    distances.insert(start, 0);
+
+    let mut prev: HashMap<Node, Node> = HashMap::new();
+
+    while let Some((dist, u)) = heap.pop() {
+        if dist > distances[&u] {
+            continue;
+        }
+        for v in neighbors(&u) {
+            let alt = dist + weights(&u, &v);
+            match distances.entry(v.clone()) {
+                Entry::Vacant(entry) => {
+                    entry.insert(alt);
+                    prev.insert(v.clone(), u.clone());
+                    heap.push((alt, v));
+                }
+                Entry::Occupied(mut entry) => {
+                    if &alt < entry.get() {
+                        entry.insert(alt);
+                        prev.insert(v.clone(), u.clone());
+                        heap.push((alt, v));
+                    }
+                }
+            }
+        }
+    }
+
+    (distances, prev)
+}
 
 pub struct NeighborsCreator {
     n_rows: usize,
@@ -159,7 +209,15 @@ impl<T> IndexMut<Position> for Grid<T> {
     }
 }
 
-fn checked_add(x: Position, dx: (isize, isize)) -> Option<Position> {
+pub fn difference(x: Position, y: Position) -> (isize, isize) {
+    let (i, j) = x;
+    let (k, l) = y;
+    let di = (k as isize) - (i as isize);
+    let dj = (l as isize) - (j as isize);
+    (di, dj)
+}
+
+pub fn checked_add(x: Position, dx: (isize, isize)) -> Option<Position> {
     let (i, j) = x;
     let (di, dj) = dx;
 

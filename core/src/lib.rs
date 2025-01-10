@@ -6,6 +6,7 @@ use {
 pub mod grid;
 pub mod iter;
 pub mod linked_list;
+pub mod min_heap;
 
 pub trait Solution<'a> {
     type Input: Clone + 'a;
