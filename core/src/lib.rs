@@ -4,6 +4,7 @@ use {
 };
 
 pub mod grid;
+pub mod iter;
 pub mod linked_list;
 
 pub trait Solution<'a> {
