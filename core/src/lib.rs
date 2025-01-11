@@ -41,8 +41,8 @@ pub fn blocks(data: &str) -> impl Iterator<Item = &str> {
     data.split("\n\n")
 }
 
-pub fn strip_label(data: &str) -> &str {
-    data.split_once(':').expect("Has colon").1.trim()
+pub fn strip_label(data: &str, delimiter: char) -> &str {
+    data.split_once(delimiter).expect("Has delimiter").1.trim()
 }
 
 pub fn digit_value(digit: u8) -> Option<u8> {

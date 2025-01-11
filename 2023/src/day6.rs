@@ -9,10 +9,10 @@ impl Solution<'_> for Day6 {
 
     fn parse_input(data: &str) -> Self::Input {
         let (times, distances) = data.split_once('\n').expect("There are two lines");
-        let times = strip_label(times)
+        let times = strip_label(times, ':')
             .split_whitespace()
             .map(|x| x.parse().expect("Times are numbers"));
-        let distances = strip_label(distances)
+        let distances = strip_label(distances, ':')
             .split_whitespace()
             .map(|x| x.parse().expect("Distances are numbers"));
         times
