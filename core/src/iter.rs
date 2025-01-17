@@ -1,7 +1,7 @@
 use std::{array::IntoIter, iter::Flatten, slice::Iter};
 
 pub struct AtMost<T, const N: usize> {
-    inner: [Option<T>; N],
+    pub inner: [Option<T>; N],
 }
 
 impl<T, const N: usize> AtMost<T, N> {
