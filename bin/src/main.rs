@@ -44,6 +44,7 @@ fn get_solution(year: usize, day: usize) {
         (2023, 22) => aoc_2023::day22::Day22::run(&data),
         (2023, 23) => aoc_2023::day23::Day23::run(&data),
         (2023, 24) => aoc_2023::day24::Day24::run(&data),
+        (2023, 25) => aoc_2023::day25::Day25::run(&data),
         (2024, 1) => aoc_2024::day1::Day1::run(&data),
         other => panic!("Unknown {other:?}"),
     }

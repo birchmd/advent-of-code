@@ -3,6 +3,7 @@ use {
     std::{collections::HashMap, fmt::Debug, hash::Hash, ops::Sub},
 };
 
+pub mod graph;
 pub mod grid;
 pub mod iter;
 pub mod linked_list;
