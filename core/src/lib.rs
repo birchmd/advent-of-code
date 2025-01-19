@@ -121,6 +121,10 @@ pub fn lcm(x: u64, y: u64) -> u64 {
     x * y / gcd(x, y)
 }
 
+pub fn id<T>(t: T) -> T {
+    t
+}
+
 pub fn count_distinct<'a, T, I>(iter: I) -> HashMap<&'a T, usize>
 where
     T: Eq + Hash,
