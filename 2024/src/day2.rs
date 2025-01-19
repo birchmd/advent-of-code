@@ -1,6 +1,4 @@
-use std::cmp::Ordering;
-
-use aoc_core::Solution;
+use {aoc_core::Solution, std::cmp::Ordering};
 
 pub struct Day2;
 
