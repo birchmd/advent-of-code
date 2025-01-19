@@ -105,6 +105,22 @@ impl NeighborsCreator {
         }
     }
 
+    pub fn up_left(&self, x: Position) -> Option<Position> {
+        self.left(self.up(x)?)
+    }
+
+    pub fn down_left(&self, x: Position) -> Option<Position> {
+        self.left(self.down(x)?)
+    }
+
+    pub fn up_right(&self, x: Position) -> Option<Position> {
+        self.right(self.up(x)?)
+    }
+
+    pub fn down_right(&self, x: Position) -> Option<Position> {
+        self.right(self.down(x)?)
+    }
+
     pub fn cardinal_neighbors_of(&self, x: Position) -> impl Iterator<Item = Position> + '_ {
         Self::CARDINAL_DIRECTIONS.into_iter().filter_map(move |dx| {
             let (i, j) = checked_add(x, dx)?;
