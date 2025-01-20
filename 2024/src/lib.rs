@@ -3,6 +3,7 @@ pub mod day2;
 pub mod day3;
 pub mod day4;
 pub mod day5;
+pub mod day6;
 
 pub fn run(day: usize, data: &str) {
     use aoc_core::Solution;
@@ -12,6 +13,7 @@ pub fn run(day: usize, data: &str) {
         3 => day3::Day3::run(data),
         4 => day4::Day4::run(data),
         5 => day5::Day5::run(data),
+        6 => day6::Day6::run(data),
         other => panic!("Unknown Day 2024 {other}"),
     }
 }

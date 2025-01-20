@@ -142,6 +142,17 @@ impl NeighborsCreator {
             }
         })
     }
+
+    pub fn cardinal_directions<'a>(
+        &'a self,
+    ) -> [Box<dyn Fn(Position) -> Option<Position> + 'a>; 4] {
+        [
+            Box::new(|x| self.up(x)),
+            Box::new(|x| self.right(x)),
+            Box::new(|x| self.down(x)),
+            Box::new(|x| self.left(x)),
+        ]
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
