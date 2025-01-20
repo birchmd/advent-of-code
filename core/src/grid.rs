@@ -9,6 +9,11 @@ use {
 };
 
 pub type Position = (usize, usize);
+pub type SignedPosition = (isize, isize);
+
+pub fn signed(x: Position) -> SignedPosition {
+    (x.0 as isize, x.1 as isize)
+}
 
 pub fn dijkstra_shortest_path<Node, I, F, G>(
     start: Node,
