@@ -29,6 +29,15 @@ impl<T, const N: usize> AtMost<T, N> {
         }
         Self { inner }
     }
+
+    pub fn push(&mut self, x: T) {
+        for q in self.inner.iter_mut() {
+            if q.is_none() {
+                *q = Some(x);
+                break;
+            }
+        }
+    }
 }
 
 impl<T, const N: usize> IntoIterator for AtMost<T, N> {
