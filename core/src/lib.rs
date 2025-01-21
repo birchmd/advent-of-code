@@ -106,6 +106,14 @@ where
     }
 }
 
+pub fn n_digits(x: u64) -> u32 {
+    if x == 0 {
+        1
+    } else {
+        x.ilog10() + 1
+    }
+}
+
 pub fn gcd(x: u64, y: u64) -> u64 {
     let (mut a, mut b) = if x < y { (y, x) } else { (x, y) };
     let mut c = a % b;
