@@ -1,6 +1,7 @@
 use {
     crate::min_heap::MinHeap,
     std::{
+        cmp::Ordering,
         collections::hash_map::{Entry, HashMap},
         fmt::Debug,
         hash::Hash,
@@ -19,7 +20,7 @@ pub fn dijkstra_shortest_path<Node, I, F, G>(
     start: Node,
     weights: F,
     neighbors: G,
-) -> (HashMap<Node, u64>, HashMap<Node, Node>)
+) -> (HashMap<Node, u64>, HashMap<Node, Vec<Node>>)
 where
     Node: Clone + Hash + Ord,
     I: IntoIterator<Item = Node>,
@@ -32,7 +33,7 @@ where
     let mut distances: HashMap<Node, u64> = HashMap::new();
     distances.insert(start, 0);
 
-    let mut prev: HashMap<Node, Node> = HashMap::new();
+    let mut prev: HashMap<Node, Vec<Node>> = HashMap::new();
 
     while let Some((dist, u)) = heap.pop() {
         if dist > distances[&u] {
@@ -43,16 +44,20 @@ where
             match distances.entry(v.clone()) {
                 Entry::Vacant(entry) => {
                     entry.insert(alt);
-                    prev.insert(v.clone(), u.clone());
+                    prev.insert(v.clone(), vec![u.clone()]);
                     heap.push((alt, v));
                 }
-                Entry::Occupied(mut entry) => {
-                    if &alt < entry.get() {
+                Entry::Occupied(mut entry) => match alt.cmp(entry.get()) {
+                    Ordering::Less => {
                         entry.insert(alt);
-                        prev.insert(v.clone(), u.clone());
+                        prev.insert(v.clone(), vec![u.clone()]);
                         heap.push((alt, v));
                     }
-                }
+                    Ordering::Equal => {
+                        prev.get_mut(&v).expect("Other prev exists").push(u.clone());
+                    }
+                    Ordering::Greater => (),
+                },
             }
         }
     }
