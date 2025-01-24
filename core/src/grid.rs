@@ -66,8 +66,8 @@ where
 }
 
 pub struct NeighborsCreator {
-    n_rows: usize,
-    n_cols: usize,
+    pub n_rows: usize,
+    pub n_cols: usize,
 }
 
 impl NeighborsCreator {

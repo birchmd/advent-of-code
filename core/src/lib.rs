@@ -133,6 +133,22 @@ pub fn id<T>(t: T) -> T {
     t
 }
 
+/// Finds the last element in range `[lower, upper]` where `condition` evaluates to `false`.
+pub fn binary_search<F>(mut lower: usize, mut upper: usize, condition: F) -> usize
+where
+    F: Fn(usize) -> bool,
+{
+    while upper - lower > 1 {
+        let mid = (upper + lower) / 2;
+        if condition(mid) {
+            upper = mid;
+        } else {
+            lower = mid;
+        }
+    }
+    lower
+}
+
 pub fn count_distinct<'a, T, I>(iter: I) -> HashMap<&'a T, usize>
 where
     T: Eq + Hash,
@@ -145,26 +161,6 @@ where
         *count += 1;
     }
     result
-}
-
-pub fn memoize_2<T, U, V, F>(f: F) -> impl FnMut(T, U) -> V
-where
-    T: Clone + Hash + Eq + 'static,
-    U: Clone + Hash + Eq + 'static,
-    V: Clone + 'static,
-    F: Fn(T, U) -> V + 'static,
-{
-    let mut memo: HashMap<(T, U), V> = HashMap::new();
-    move |t, u| {
-        let key = (t.clone(), u.clone());
-        if let Some(v) = memo.get(&key) {
-            v.clone()
-        } else {
-            let v = f(t, u);
-            memo.insert(key, v.clone());
-            v
-        }
-    }
 }
 
 pub fn basic_grid(data: &str) -> Grid<u8> {
@@ -186,29 +182,4 @@ where
 #[test]
 fn test_gcd() {
     assert_eq!(gcd(462, 1071), 21);
-}
-
-#[test]
-fn test_memoize2() {
-    let count = std::sync::Arc::new(std::sync::RwLock::new(0_usize));
-    let count_f = count.clone();
-
-    // This function modifies the variable `count`.
-    let f = move |a: usize, b: usize| -> usize {
-        let mut x = count_f.write().unwrap();
-        let y = a + b;
-        (*x) += y;
-        y
-    };
-
-    // By memoizing the function we will only call it once for each input.
-    let mut g = memoize_2(f);
-    let x = g(3, 4);
-    let y = g(3, 4);
-    let z = count.read().unwrap();
-
-    // Since `f` is only called once (even though `g` is called twice)
-    // it is true that x == y == z.
-    assert_eq!(x, y);
-    assert_eq!(x, *z);
 }
