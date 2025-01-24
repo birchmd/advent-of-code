@@ -1,7 +1,7 @@
 use {
     aoc_core::{
         graph::{Node, UndirectedWeightedGraph},
-        Solution,
+        MerryChristmas, Solution,
     },
     std::collections::{HashMap, HashSet},
 };
@@ -11,7 +11,7 @@ pub struct Day25;
 impl<'a> Solution<'a> for Day25 {
     type Input = HashMap<&'a str, Vec<&'a str>>;
     type Output1 = usize;
-    type Output2 = ();
+    type Output2 = MerryChristmas;
 
     fn parse_input(data: &'a str) -> Self::Input {
         let mut result: HashMap<&str, Vec<&str>> = HashMap::new();
@@ -34,7 +34,7 @@ impl<'a> Solution<'a> for Day25 {
     }
 
     fn part_2(_input: Self::Input) -> Self::Output2 {
-        // It's day 25 so there is no part 2 :)
+        MerryChristmas
     }
 }
 

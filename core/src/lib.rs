@@ -29,6 +29,10 @@ pub trait Solution<'a> {
     }
 }
 
+/// There is no part 2 on day 25, so the output can simply be `MerryChristmas` :)
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct MerryChristmas;
+
 pub fn fold_lines<T, F: Fn(&mut T, &str)>(data: &str, init: T, acc: F) -> T {
     let mut result = init;
     for line in data.lines() {
