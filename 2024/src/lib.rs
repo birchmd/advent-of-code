@@ -13,6 +13,7 @@ pub mod day2;
 pub mod day20;
 pub mod day21;
 pub mod day22;
+pub mod day23;
 pub mod day3;
 pub mod day4;
 pub mod day5;
@@ -46,6 +47,7 @@ pub fn run(day: usize, data: &str) {
         20 => day20::Day20::run(data),
         21 => day21::Day21::run(data),
         22 => day22::Day22::run(data),
+        23 => day23::Day23::run(data),
         other => panic!("Unknown Day 2024 {other}"),
     }
 }
