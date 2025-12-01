@@ -45,7 +45,7 @@ impl<T> LinkedList<T> {
         matches!(self, LinkedList::Nil)
     }
 
-    pub fn iter(&self) -> LLIterRef<T> {
+    pub fn iter(&self) -> LLIterRef<'_, T> {
         LLIterRef { state: self }
     }
 }

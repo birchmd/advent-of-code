@@ -43,7 +43,7 @@ fn stones_length(number: u64, steps: u8, memoize: &mut HashMap<(u64, u8), u64>) 
     let n_digits = n_digits(number);
     let answer = if number == 0 {
         stones_length(1, steps - 1, memoize)
-    } else if n_digits % 2 == 0 {
+    } else if n_digits.is_multiple_of(2) {
         let p10 = 10_u64.pow(n_digits / 2);
         let left = number / p10;
         let right = number % p10;

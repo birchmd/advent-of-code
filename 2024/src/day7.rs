@@ -60,7 +60,7 @@ fn check_data(value: u64, mut inputs: Vec<u64>) -> bool {
     }
 
     let rightmost = inputs.pop().unwrap();
-    if value % rightmost != 0 {
+    if !value.is_multiple_of(rightmost) {
         check_data(value - rightmost, inputs)
     } else {
         check_data(value / rightmost, inputs.clone()) || check_data(value - rightmost, inputs)
@@ -77,7 +77,7 @@ fn check_data_with_concat(value: u64, mut inputs: Vec<u64>) -> bool {
     let rightmost = inputs.pop().unwrap();
     let mut possibilities: AtMost<(u64, Vec<u64>), 3> =
         AtMost::one((value - rightmost, inputs.clone()));
-    if value % rightmost == 0 {
+    if value.is_multiple_of(rightmost) {
         possibilities.push((value / rightmost, inputs.clone()));
     }
     let stv = value.to_string();

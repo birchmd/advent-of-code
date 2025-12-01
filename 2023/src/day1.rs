@@ -17,7 +17,7 @@ impl Solution<'_> for Day1 {
             .map(|line| {
                 let mut digits = line.bytes().filter_map(digit_value);
                 let first = digits.next().expect("Must have at least one digit");
-                let last = digits.last().unwrap_or(first);
+                let last = digits.next_back().unwrap_or(first);
                 (first, last)
             })
             .map(|(a, b)| (a * 10 + b) as u64)

@@ -123,7 +123,7 @@ impl<'a> Rule<'a> {
                 Some((condition, target))
             })
             .collect();
-        let fallback = remainder.split(',').last().unwrap();
+        let fallback = remainder.split(',').next_back().unwrap();
         Self {
             name,
             conditions,

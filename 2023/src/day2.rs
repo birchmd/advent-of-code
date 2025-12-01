@@ -44,7 +44,7 @@ impl Game {
         let (id, samples) = line.split_once(':').expect("Must contain colon");
         let id = id
             .split(' ')
-            .last()
+            .next_back()
             .unwrap()
             .parse()
             .expect("ID is a number");
