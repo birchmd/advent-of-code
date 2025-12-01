@@ -7,5 +7,6 @@ edition.workspace = true
 [dependencies]
 aoc_2023.workspace = true
 aoc_2024.workspace = true
+aoc_2025.workspace = true
 aoc-core.workspace = true
 clap.workspace = true

@@ -3,8 +3,8 @@ use {clap::Parser, std::fs};
 mod cli;
 
 const BASE_PATH: &str = env!("CARGO_MANIFEST_DIR");
-const LATEST_DAY: usize = 25;
-const LATEST_YEAR: usize = 2024;
+const LATEST_DAY: usize = 1;
+const LATEST_YEAR: usize = 2025;
 
 fn main() {
     let args = cli::Cli::parse();
@@ -22,6 +22,7 @@ fn get_solution(year: usize, day: usize) {
     match year {
         2023 => aoc_2023::run(day, &data),
         2024 => aoc_2024::run(day, &data),
+        2025 => aoc_2025::run(day, &data),
         other => panic!("Unknown year {other}"),
     }
 }

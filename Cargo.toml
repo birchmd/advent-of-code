@@ -3,6 +3,7 @@ resolver = "2"
 members = [
     "2023",
     "2024",
+    "2025",
     "bin",
     "core",
 ]
@@ -14,5 +15,6 @@ edition = "2021"
 [workspace.dependencies]
 aoc_2023 = { path = "./2023/" }
 aoc_2024 = { path = "./2024/" }
+aoc_2025 = { path = "./2025/" }
 aoc-core = { path = "./core/" }
 clap = { version = "4.5", features = ["derive"] }
