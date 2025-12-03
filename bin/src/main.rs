@@ -3,7 +3,7 @@ use {clap::Parser, std::fs};
 mod cli;
 
 const BASE_PATH: &str = env!("CARGO_MANIFEST_DIR");
-const LATEST_DAY: usize = 2;
+const LATEST_DAY: usize = 3;
 const LATEST_YEAR: usize = 2025;
 
 fn main() {
