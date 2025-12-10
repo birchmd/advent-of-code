@@ -28,7 +28,7 @@ impl Solution<'_> for Day5 {
     fn part_1(input: Self::Input) -> Self::Output1 {
         let (ranges, ids) = input;
         ids.iter()
-            .filter(|id| ranges.iter().any(|range| range.contains(id)))
+            .filter(|id| ranges.iter().any(|range| range.contains(*id)))
             .count()
     }
 

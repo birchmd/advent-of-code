@@ -6,3 +6,4 @@ edition.workspace = true
 
 [dependencies]
 aoc-core.workspace = true
+good_lp.workspace = true

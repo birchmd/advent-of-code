@@ -18,3 +18,4 @@ aoc_2024 = { path = "./2024/" }
 aoc_2025 = { path = "./2025/" }
 aoc-core = { path = "./core/" }
 clap = { version = "4.5", features = ["derive"] }
+good_lp = { version = "1.14", features = ["highs"], default-features = false }
