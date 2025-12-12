@@ -1,5 +1,41 @@
 use std::{array::IntoIter, iter::Flatten, slice::Iter};
 
+pub struct TakeN<'a, I> {
+    n: usize,
+    taken: usize,
+    inner: &'a mut I,
+}
+
+impl<'a, I> TakeN<'a, I>
+where
+    I: Iterator,
+{
+    pub fn new(iter: &'a mut I, n: usize) -> Self {
+        Self {
+            n,
+            taken: 0,
+            inner: iter,
+        }
+    }
+}
+
+impl<'a, I, T> Iterator for TakeN<'a, I>
+where
+    I: Iterator<Item = T>,
+{
+    type Item = T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.taken == self.n {
+            return None;
+        }
+
+        let item = self.inner.next()?;
+        self.taken += 1;
+        Some(item)
+    }
+}
+
 pub struct AtMost<T, const N: usize> {
     pub inner: [Option<T>; N],
 }
