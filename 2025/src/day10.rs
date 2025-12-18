@@ -1,8 +1,5 @@
 use {
-    aoc_core::Solution,
-    good_lp::{
-        default_solver, variable, variables, Expression, Solution as _, SolverModel, Variable,
-    },
+    aoc_core::{iter::DynCartesianProduct, matrix::IntegerMatrix, Solution},
     std::{
         collections::{HashSet, VecDeque},
         ops::BitXor,
@@ -97,6 +94,10 @@ impl Button {
 
         Self(value)
     }
+
+    fn contains_index(&self, i: u16) -> bool {
+        self.0 & (1 << i) > 0
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -132,37 +133,74 @@ impl Machine {
     }
 
     fn joltage_solve(&self) -> u32 {
-        let mut problem = variables!();
+        let n = self.joltages.len();
+        let m = self.buttons.len();
 
-        let vars: Vec<Variable> = (0..self.buttons.len())
-            .map(|_| problem.add(variable().min(0).integer()))
-            .collect();
+        // A button can be pressed at most a number of times equal to
+        // the smallest required joltage it is connected to.
+        let mut max_presses = vec![u32::MAX; m];
 
-        let objective: Expression = vars.iter().sum();
-        let mut model = problem.minimise(objective).using(default_solver);
-
-        let mut offset = 1;
-        for target_val in &self.joltages {
-            let expr =
-                self.buttons
-                    .iter()
-                    .enumerate()
-                    .fold(Expression::from(0), |expr, (i, button)| {
-                        if 0 < button.0 & offset {
-                            expr + vars[i]
-                        } else {
-                            expr
-                        }
-                    });
-
-            model.add_constraint(expr.eq(*target_val));
-            offset <<= 1;
+        // Set up augmented matrix
+        let mut matrix = IntegerMatrix {
+            rows: vec![vec![0; m + 1]; n],
+        };
+        for (j, button) in self.buttons.iter().enumerate() {
+            for (i, joltage) in self.joltages.iter().enumerate() {
+                if button.contains_index(i as u16) {
+                    max_presses[j] = max_presses[j].min(*joltage);
+                    matrix.rows[i][j] = 1;
+                }
+            }
+        }
+        for (i, joltage) in self.joltages.iter().enumerate() {
+            matrix.rows[i][m] = (*joltage) as i64;
         }
 
-        match model.solve() {
-            Ok(solution) => solution.eval(vars.iter().sum::<Expression>()).round() as u32,
-            Err(e) => panic!("Failed to solve: {e:?}"),
+        // Row reduce
+        let (free_vars, fixed_vars) = {
+            let (mut tmp, fixed_vars) = matrix.partial_row_reduce();
+            // Pop off the last index because the augment column does not represent a variable.
+            tmp.pop()
+                .expect("Augment matrix has at least one column without a leading 1");
+            (tmp, fixed_vars)
+        };
+
+        if free_vars.is_empty() {
+            // System is determined!
+            // So the answer is just the sum of the augment entries.
+            let total: i64 = matrix.rows.into_iter().map(|r| r[m]).sum();
+            return total as u32;
         }
+
+        // Brute force search over free vars state space
+        let state_space =
+            DynCartesianProduct::new(free_vars.iter().map(|j| max_presses[*j] + 1).collect())
+                .expect("All buttons can be pressed at least once");
+
+        let mut min_presses = u32::MAX;
+        'outer: for values in state_space {
+            let mut total_presses: u32 = values.iter().copied().sum();
+            for var in &fixed_vars {
+                // Only accept whole number presses
+                let free_values = values.iter().map(|x| *x as i64);
+                let Some(presses) =
+                    matrix.evaluate_augmented_row(*var, free_vars.iter().copied().zip(free_values))
+                else {
+                    continue 'outer;
+                };
+                // Only accept non-negative presses
+                if presses < 0 {
+                    continue 'outer;
+                }
+                total_presses += presses as u32;
+            }
+            // New smallest solution found!
+            if total_presses < min_presses {
+                min_presses = total_presses;
+            }
+        }
+
+        min_presses
     }
 }
 
